@@ -104,12 +104,9 @@ function initMap() {
 
         $('#min_value').change(function() {
             var min_value = document.getElementById("min_value").value;
-            console.log('asd');
             for (let i = 0; i < circles.length; i++) {
-                console.log('asd');
                 if ( ( min_value/100 ) * max_value  >= circles[i].value ) {
                     circles[i].setMap(null);
-                    console.log('asd');
                 } else {
                     circles[i].setMap(map);
                 }
