@@ -3,7 +3,7 @@
     Grafikai
 @stop
 @section('Styles')
-    <link href="{{ asset('css/mapForm.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('/css/mapForm.css') }}" media="all" rel="stylesheet"  type="text/css">
 @stop
 @section('content')
     <div class='navGraphs'>
