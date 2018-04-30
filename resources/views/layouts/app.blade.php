@@ -22,8 +22,6 @@
     <!-- Styles -->
     <link href="{{ secure_asset('assets/mdi/css/app.css') }}" rel="stylesheet">
     <link href="{{ secure_asset('assets/mdi/css/header.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/header.css') }}" rel="stylesheet">
     @yield('Styles')
 </head>
 <body>
