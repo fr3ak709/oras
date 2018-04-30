@@ -67,7 +67,7 @@ class DataController extends Controller
      */
     public function index()
     {
-        return view('viewGraphs');
+        return view('ViewGraphs');
     }
 
 

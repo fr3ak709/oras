@@ -28,7 +28,7 @@ Route::get('test', 'ReportController@generate')->name('/test');
 Route::get('generate_data','DataController@generate')->name('/generate_data'); 
 Route::get('mapData', 'DataController@getMapData');
 
-Route::get('viewReports','ReportController@index')->name('viewReports');
+Route::get('viewReports', 'ReportController@index')->name('viewReports');
 Route::get('viewGraphs', 'DataController@index')->name('viewGraphs');
 
 Route::get('newReport',function () {return view('reports/create');})->name('newReport')->middleware('auth');
