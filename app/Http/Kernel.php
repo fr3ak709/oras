@@ -19,6 +19,7 @@ class Kernel extends HttpKernel
         \AIVIKS\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \AIVIKS\Http\Middleware\TrustProxies::class,
+        
         \AIVIKS\Http\Middleware\HttpsProtocol::class,  
     ];
 
