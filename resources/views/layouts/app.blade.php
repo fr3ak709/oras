@@ -20,8 +20,8 @@
     @yield('Fonts')
 
     <!-- Styles -->
-    <link href="{{ secure_asset('assets/mdi/css/app.css') }}" media="all" rel="stylesheet"  type="text/css">
-    <link href="{{ secure_asset('assets/mdi/css/header.css') }}" media="all"  rel="stylesheet"  type="text/css">
+    <link href="{{ secure_asset('/css/app.css') }}" media="all" rel="stylesheet"  type="text/css">
+    <link href="{{ secure_asset('/css/header.css') }}" media="all"  rel="stylesheet"  type="text/css">
     @yield('Styles')
 </head>
 <body>
