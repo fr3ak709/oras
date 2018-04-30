@@ -19,6 +19,7 @@ function initMap() {
             var date_to   = document.getElementById("date_to").value;
             var sensor    = $('input[name=sensors]:checked').val();
             console.log(APP_URL);
+            console.log('https://orotarsa.herokuapp.com/mapData/');
             $.ajax({
                 //to-do max time between dates 1 day / 1 week / 1 month ?
                 url: 'https://orotarsa.herokuapp.com/mapData/',
