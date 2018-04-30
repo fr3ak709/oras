@@ -20,7 +20,8 @@
     @yield('Fonts')
 
     <!-- Styles -->
-
+    <link href="{{     asset('app.css') }}" rel="stylesheet">
+    <link href="{{     asset('header.css') }}" rel="stylesheet">
     <link href="{{     secure_asset('assets/css/app.css') }}" rel="stylesheet">
     <link href="{{     secure_asset('assets/css/header.css') }}" rel="stylesheet">
     @yield('Styles')
