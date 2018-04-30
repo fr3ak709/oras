@@ -12,7 +12,8 @@
     <title>{{ config('AIVIKS', 'AIVIKS') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    
+    <script src="{{ secure_asset('/js/app.js') }}" defer></script>
     @yield('Scripts')
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -29,7 +30,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('/') }}">
-                    <img src="/pictures/logo/logo.png" style='width:36px;height:48px;'>
+                    <img src="{{ secure_asset('/pictures/logo/logo.png') }}" style='width:36px;height:48px;'>
                     {{ config('AIVIKS', 'AIVIKS') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
