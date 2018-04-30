@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon" href="{{{ asset('/pictures/logo/logo.png') }}}">
+    <link rel="shortcut icon" href="{{{ secure_asset('/pictures/logo/logo.png') }}}">
     <title>{{ config('AIVIKS', 'AIVIKS') }}</title>
 
     <!-- Scripts -->
