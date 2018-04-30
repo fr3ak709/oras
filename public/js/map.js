@@ -18,9 +18,10 @@ function initMap() {
             var date_from = document.getElementById("date_from").value;
             var date_to   = document.getElementById("date_to").value;
             var sensor    = $('input[name=sensors]:checked').val();
+            
             $.ajax({
                 //to-do max time between dates 1 day / 1 week / 1 month ?
-                url: 'mapData/',
+                url: 'APP_URL'+'/mapData/',
                 type: 'GET',
                 data: { 
                     date_from: date_from,

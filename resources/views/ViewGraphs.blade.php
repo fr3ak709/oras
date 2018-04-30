@@ -60,6 +60,11 @@
     </form>
     <div id="map" class="map"></div>
     
+
+    <script type="text/javascript">
+        var APP_URL = {!! json_encode(url('/')) !!}
+        console.log(APP_URL);
+    </script>
     <script src="{{ secure_asset('/js/map.js') }}" >
         </script>
     <script src="{{ secure_asset('/js/range.js') }}" >
