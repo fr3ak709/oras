@@ -1,0 +1,16 @@
+.form-group {
+    margin: 1vh 1vw 1vh 1vw;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form-control {
+    flex: 1;
+    padding: 1vh 1vw 1vh 1vw;
+}
+
+.form-control-file {
+    flex: 1;
+    padding: 1vh;
+}

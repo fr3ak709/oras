@@ -1,0 +1,15 @@
+.jumbotron {
+    background: rgb(124, 182, 91);
+    color: white;
+    padding: 2vh 1vw 1vh 1vw;
+}
+
+
+.nav-link:hover {
+    background: rgb(228, 228, 228);
+    border-radius: 1vw;
+}
+
+.logo{
+    width: 20px;
+}
