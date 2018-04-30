@@ -22,7 +22,7 @@ function initMap() {
             console.log('https://orotarsa.herokuapp.com/mapData/');
             $.ajax({
                 //to-do max time between dates 1 day / 1 week / 1 month ?
-                url: 'https://orotarsa.herokuapp.com/mapData/',
+                url: 'https://orotarsa.herokuapp.com/mapData',
                 type: 'GET',
                 data: { 
                     date_from: date_from,

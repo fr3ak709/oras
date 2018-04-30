@@ -15,6 +15,7 @@ class CreateSensorsTable extends Migration
     {
         Schema::create('sensors', function (Blueprint $table) {
             $table->increments('id');
+            //fill struffs
             $table->timestamps();
         });
     }
