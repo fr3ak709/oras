@@ -15,7 +15,7 @@ class HttpsProtocol
      */
     public function handle($request, Closure $next)
     {
-        if ($request->header('X-Forwarded-Proto') === 'http' && env('APP_ENV') === 'prod') {
+        if (!$request->header('X-Forwarded-Proto') === 'https' && env('APP_ENV') === 'prod') {
             return redirect()->secure($request->getRequestUri());
         }
 
