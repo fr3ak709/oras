@@ -16,7 +16,7 @@ Auth::routes();
 Route::get('/changePassword','SpecialistController@showChangePasswordForm');
 
 Route::get ('/', function() {
-    return view('/welcome'); })->name('/home');
+    return view('/welcome'); })->name('/');
 Route::get('reports','ReportController@index')->name('/reports'); 
 Route::get('/report/{id}', 'ReportController@download');
 Route::get('users', 'SpecialistController@index')->middleware('amAdmin')->name('/users');

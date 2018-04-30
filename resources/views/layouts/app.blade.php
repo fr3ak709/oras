@@ -20,15 +20,16 @@
     @yield('Fonts')
 
     <!-- Styles -->
-    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ secure_asset('css/header.css') }}" rel="stylesheet">
+
+    <link href="{{     secure_asset('assets/css/app.css') }}" rel="stylesheet">
+    <link href="{{     secure_asset('assets/css/header.css') }}" rel="stylesheet">
     @yield('Styles')
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route('/') }}">
                     <img src="/pictures/logo/logo.png" style='width:36px;height:48px;'>
                     {{ config('AIVIKS', 'AIVIKS') }}
                 </a>
