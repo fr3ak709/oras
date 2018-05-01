@@ -18,11 +18,15 @@ function initMap() {
             var date_from = document.getElementById("date_from").value;
             var date_to   = document.getElementById("date_to").value;
             var sensor    = $('input[name=sensors]:checked').val();
-            console.log(APP_URL);
-            console.log('https://orotarsa.herokuapp.com/mapData/');
+            String.prototype.splice = function(idx, rem, str) {
+                return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+            };
+            
+            var result = "foo baz".splice(4, 0, "bar ");
+            
             $.ajax({
                 //to-do max time between dates 1 day / 1 week / 1 month ?
-                url: APP_URL+'/mapData',
+                url: APP_URL.splice(4, 0, "s")+'/mapData',
                 type: 'GET',
                 data: { 
                     date_from: date_from,
