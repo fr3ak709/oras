@@ -17,13 +17,15 @@ Route::get('/changePassword','SpecialistController@showChangePasswordForm');
 
 Route::get ('/', function() {
     return view('/welcome'); })->name('/');
+    
 Route::get('reports','ReportController@index')->name('/reports'); 
-Route::get('/report/{id}', 'ReportController@download');
 Route::get('users', 'SpecialistController@index')->middleware('amAdmin')->name('/users');
+Route::get('devices','DeviceController@index')->name('/devices'); 
 
-Route::get('test', 'ReportController@generate')->name('/test');
+Route::get('/report/{id}', 'ReportController@download');
+Route::get('/device/{id}', 'SensorController@index');
 
-
+Route::get('test', 'Auth\RegisterController@createAdmin')->name('/test');
 
 Route::get('generate_data','DataController@generate')->name('/generate_data'); 
 Route::get('mapData', 'DataController@getMapData');
@@ -31,11 +33,20 @@ Route::get('mapData', 'DataController@getMapData');
 Route::get('viewReports', 'ReportController@index')->name('viewReports');
 Route::get('viewGraphs', 'DataController@index')->name('viewGraphs');
 
-Route::get('newReport',function () {return view('reports/create');})->name('newReport')->middleware('auth');
-Route::get('newUser',function () {return view('specialists/create');})->name('newUser')->middleware('auth');
+Route::get('newReport',function () {return view('reports/create');})->name('newReport');
+Route::get('newDevice',function () {return view('devices/create');})->name('newDevice');
+Route::get('newUser',  function () {return view('specialists/create');})->name('newUser');
+Route::get('newSensor/{id}', 'SensorController@createView')->name('newSensor');
 
-Route::delete('report/{id}', array('as' => 'report.destroy','uses' => 'ReportController@destroy'))->middleware('auth');
-Route::delete('user/{id}', array('as' => 'user.destroy','uses' => 'SpecialistController@destroy'))->middleware('amAdmin');
+Route::delete('report/{id}', array('as' => 'report.destroy','uses' => 'ReportController@destroy'));
+Route::delete('user/{id}', array('as' => 'user.destroy','uses' => 'SpecialistController@destroy'));
+Route::delete('device/{id}', array('as' => 'device.destroy','uses' => 'DeviceController@destroy'));
+Route::delete('devices_sensor/{id}', array('as' => 'sensor.destroy','uses' => 'SensorController@destroy'));
 
 Route::post('/changePassword','SpecialistController@changePassword')->name('changePassword');
 Route::post('/uploadReport', 'ReportController@create');
+Route::post('/addDevice', 'DeviceController@create');
+Route::post('/addSensor/{id}', 'SensorController@create');
+
+
+Route::get('createAdmin', 'Auth\ResetPasswordController@createAdmin')->name('/createAdmin');

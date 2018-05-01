@@ -25,6 +25,8 @@ class SetForeignKeys extends Migration
 /*         Schema::table('sensor_data', function($table) {
             $table->foreign('sensors_id')->references('id')
             ->on('sensors');
+            $table->foreign('streets_id')->references('id')
+            ->on('streets');
         }); */
 /*         Schema::table('devices_sensors', function($table) {
             $table->foreign('devices_id')->references('id')

@@ -20,6 +20,7 @@ class SensorsData extends Migration
             $table->double('long');
             $table->double('value');
             $table->integer('sensors_id')->unsigned();
+            $table->integer('streets_id')->unsigned();
             $table->timestamps();
         });        
 

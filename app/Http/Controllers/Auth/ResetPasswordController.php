@@ -36,4 +36,14 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    protected function createAdmin()
+    {
+        return User::create([
+            'name' => 'Administratorius',
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('nesakysiu'),
+            'role' => 'Administrator',
+        ]);
+    }
 }

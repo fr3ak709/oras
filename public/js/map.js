@@ -18,6 +18,8 @@ function initMap() {
             var date_from = document.getElementById("date_from").value;
             var date_to   = document.getElementById("date_to").value;
             var sensor    = $('input[name=sensors]:checked').val();
+            var city = 'Kaunas';
+            
             String.prototype.splice = function(idx, rem, str) {
                 return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
             };

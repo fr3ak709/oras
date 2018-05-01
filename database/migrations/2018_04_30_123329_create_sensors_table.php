@@ -16,7 +16,7 @@ class CreateSensorsTable extends Migration
         Schema::create('sensors', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('precision');
-            $table->double('expexcted_operating_time');
+            $table->double('expected_operating_time');
             $table->string('power_consumption');
             $table->string('voltage_min');
             $table->string('voltage_max');
