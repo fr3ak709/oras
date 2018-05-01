@@ -14,14 +14,15 @@ class CreateReportsTable extends Migration
     public function up()
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->increments('id');
+            $table->engine = 'InnoDB';
+            $table->increments('id')->unsigned();
             $table->string('title');
             $table->string('path');
-            $table->foreign('creator_id')->references('id')
-            ->on('users')->onDelete('cascade');
+            $table->integer('creator_id')->unsigned();
             $table->string('date');
             $table->timestamps();
         });
+
     }
 
     /**

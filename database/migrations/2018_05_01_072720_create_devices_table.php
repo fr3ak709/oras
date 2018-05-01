@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStreetsTable extends Migration
+class CreateDevicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateStreetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('streets', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('devices', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
             $table->string('name');
-            $table->foreign('city_id')->references('id')
-                ->on('cities')->onDelete('cascade');
+            $table->integer('users_id')->unsigned();
             $table->timestamps();
         });
+
     }
 
     /**
@@ -29,6 +29,6 @@ class CreateStreetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('streets');
+        Schema::dropIfExists('devices');
     }
 }
