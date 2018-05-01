@@ -27,10 +27,10 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('generate:report')
-                  ->everMinute();
+                  ->daily();
         
     }
-
+    
     /**
      * Register the commands for the application.
      *
