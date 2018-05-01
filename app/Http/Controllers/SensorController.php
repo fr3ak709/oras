@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Auth;
 
 class SensorController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('amAdmin');
+    }
 
     public function create ($device_id, Request $request) {
         $devices_sensor = new Devices_sensor();

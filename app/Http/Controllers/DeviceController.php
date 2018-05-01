@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class DeviceController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('amAdmin');
+    }
 
 
     public function create (Request $request) {

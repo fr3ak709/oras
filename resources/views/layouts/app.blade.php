@@ -40,14 +40,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto navigation">
-                    @guest
+
                         <li> <a class='nav-link' href="{{route('viewGraphs')}}">Grafikai</a> </li>    
                         <li> <a class='nav-link' href="{{route('viewReports')}}">Ataskaitos</a> </li>
-                    @else
-                        <li> <a class='nav-link' href="{{route('viewGraphs')}}">Grafikai</a> </li>
-                        <li> <a class='nav-link' href="{{route('/reports')}}">Ataskaitos</a> </li>    
-                        <li> <a class='nav-link' href="{{route('/users')}}">Specialistai</a> </li>
-                    @endguest
+
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -67,7 +63,9 @@
                                     <a class="dropdown-item" href="/changePassword">
                                         {{ __('Pakeisti slaptažodį') }}
                                     </a>
-
+                                    <a class="dropdown-item" href="{{route('/reports')}}">Ataskaitos</a>
+                                    <a class="dropdown-item" href="{{route('/devices')}}">Prietaisai</a>   
+                                    <a class="dropdown-item" href="{{route('/users')}}">Specialistai</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -6,10 +6,7 @@
     <link href="{{ secure_asset('/css/mapForm.css') }}" media="all" rel="stylesheet"  type="text/css">
 @stop
 @section('content')
-    <div class='navGraphs'>
-        <a href='' class='btn btn-info' >Žemėlapis</a> 
-        <a href='' class='btn btn-info' >Grafikai</a> 
-    </div>
+
     <br />
     <form>
         <div class='columns'>
@@ -39,9 +36,8 @@
             <div class='column-right'>
                 <div class="form-group row radio-buttons">
                     <div class="form-check radio col-md-12">
-                        <label class="radio col-md-6 col-form-label text-md-right" for="sensors">CO2</label>
-                        <input class="radio col-md-4 radio-circle" name="sensors" type="radio" value='co2'>
-                        
+                        <label class="radio col-md-6 col-form-label text-md-right" for="sensors">CO</label>
+                        <input class="radio col-md-4 radio-circle" name="sensors" type="radio" value='co'>
                     </div> <br />
                     <div class="form-check radio col-md-12">
                         <label class="radio col-md-6 col-form-label text-md-right" for="sensors">NO2</label>
@@ -51,7 +47,6 @@
                     <div class="form-check radio col-md-12">
                         <label class="radio col-md-6 col-form-label text-md-right" for="sensors">Temperature</label>
                         <input class="radio col-md-4 radio-circle" name="sensors" type="radio" value='temperature' >
-                        
                     </div> <br />
                 </div>
             </div>
@@ -63,7 +58,6 @@
 
     <script type="text/javascript">
         var APP_URL = {!! json_encode(url('/')) !!}
-        console.log(APP_URL);
     </script>
     <script src="{{ secure_asset('/js/map.js') }}" >
         </script>

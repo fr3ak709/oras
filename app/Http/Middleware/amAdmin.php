@@ -16,9 +16,9 @@ class amAdmin
      */
     public function handle($request, Closure $next)
     {
-        if ( !Auth::check() ) {
-            return redirect('/');
+        if (  Auth::user()->role === 'Administrator' ) {
+            return $next($request);
         }   
-        return $next($request);
+        return redirect('/');
     }
 }

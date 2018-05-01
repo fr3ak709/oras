@@ -45,13 +45,13 @@ class GenerateReport extends Command
         $data = ['string' , 'array', $date];
 
         $file = PDF::loadView('reports/GeneratedReport', ['data'=>$data]);
-
         $report = new Report();
         $report->creator_id = 101;
-        $report->title = $date. ' Automatiškai sugeneruota ataskaita.pdf';
+        $report->title = 'generuota ataskaita';
         $report->date = $date;
-        $path = Storage::disk('public')->put($report->title, $file->output());
-        $report->path = $path;
+        $unique_name = $date.'.pdf';
+        Storage::disk('public')->put($unique_name, $file->output());
+        $report->path = $unique_name;
         $report->save(); 
     }
 }

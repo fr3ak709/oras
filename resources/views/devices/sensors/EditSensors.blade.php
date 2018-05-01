@@ -23,8 +23,8 @@
             
                 <td>{{ $item->date }}</td>
                 <td>{{ $item->valid_till }}</td>
-                <td>{{  $item->name }}</td>
-                <td>{{  $item->value_name }}</td>
+                <td>{{ $item->name }}</td>
+                <td>{{ $item->value_name }}</td>
                 
                 <td> 
                     <form action="{{ url('devices_sensor', $item->id ) }}" method="POST">

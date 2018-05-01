@@ -25,7 +25,7 @@ Route::get('devices','DeviceController@index')->name('/devices');
 Route::get('/report/{id}', 'ReportController@download');
 Route::get('/device/{id}', 'SensorController@index');
 
-Route::get('test', 'Auth\RegisterController@createAdmin')->name('/test');
+Route::get('test', 'DataController@generate')->name('/test');
 
 Route::get('generate_data','DataController@generate')->name('/generate_data'); 
 Route::get('mapData', 'DataController@getMapData');

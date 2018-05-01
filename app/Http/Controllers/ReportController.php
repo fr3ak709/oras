@@ -31,9 +31,9 @@ class ReportController extends Controller
         if ($yours) { 
             Storage::disk('public')->delete($report->path);
             $report->delete();
-            return redirect()->back()->with("success", $report->title." report was deleted succesfully.");
+            return redirect()->back()->with("success", $report->title." ištrinta.");
         } else {
-            return redirect()->back()->with("error", $report->title." you cannot deete this file.");
+            return redirect()->back()->with("error", $report->title." Jūs negalite ištrinti šio failo.");
         }
     }
 
@@ -41,7 +41,7 @@ class ReportController extends Controller
         $report = Report::findOrFail($id);
         $exists = Storage::disk('public')->exists($report->path);
         if($exists) {
-            return  Storage::disk('public')->download($report->path, $report->title.'.pdf');
+            return  Storage::disk('public')->download($report->path, $report->date.' Ataskaita.pdf');
         }
     }
     public function viewReport($id) {
@@ -56,7 +56,7 @@ class ReportController extends Controller
         $arr = array($request->title, $request->date, $request->file('report'));
         foreach ($arr as $field) {
             if (empty($field)) {
-                return redirect()->back()->with("error","Fill all fields.  ". 
+                return redirect()->back()->with("error","Užpildykite visus laukus.  ". 
                                             "Pavadinimas: ".'"'.$request->title.'"  '.
                                             "Data: ".'"'.$request->date.'"  '.
                                             "Failas: ".'"'.$request->file('report').'"  ');
@@ -68,9 +68,9 @@ class ReportController extends Controller
             $request->file('report')
         );
         if ($result) {
-            return redirect()->back()->with("success", "File was uploaded succesfully.");
+            return redirect()->back()->with("success", "Ataskaita įkelta.");
         } else {
-            return redirect()->back()->with("error","You need to login to upload a file.");
+            return redirect()->back()->with("error","Jums reikia prisijungti.");
         }
     }
 

@@ -28,7 +28,7 @@ function initMap() {
             
             $.ajax({
                 //to-do max time between dates 1 day / 1 week / 1 month ?
-                url: APP_URL.splice(4, 0, "s")+'/mapData',
+                url: APP_URL.splice(4, 0, "")+'/mapData',
                 type: 'GET',
                 data: { 
                     date_from: date_from,
@@ -37,7 +37,7 @@ function initMap() {
                 },
                 success: function(response)
                 {
-                    updateMap(response, sensor);
+                    updateMap(response);
                 }
             });
         }
@@ -45,18 +45,19 @@ function initMap() {
         function resetMap() {
             for (var i = 0; i < circles.length; i++) {
                 circles[i].setMap(null);
-                circles[i] = undefined;
             }
         }
 
         //puts markers on the map
-        function updateMap(responseArray, sensor) {
+        function updateMap(responseArray) {
             resetMap();
             for (let i = 0; i < responseArray.length; i++) {
                 max_value = 200;
-                var props = setProps(responseArray[i][sensor], max_value);
+                
+                var props = setProps(responseArray[i].value, max_value);
                 circles[i] = new google.maps.Circle({
-                    value:  responseArray[i][sensor],
+                    value:  responseArray[i].value,
+                    date: responseArray[i].date,
                     strokeWeight: 0,
                     fillColor: props.colour,
                     fillOpacity: props.opacity,
@@ -66,7 +67,7 @@ function initMap() {
                 });
                 //circle is the google.maps.Circle-instance
                 circles[i].addListener('mouseover',function(){
-                    this.getMap().getDiv().setAttribute('title',(sensor+': '+Number(this.get('value')).toFixed(2)));
+                    this.getMap().getDiv().setAttribute('title',('DATA:'+this.get('date')+' [vertė:'+Number(this.get('value')).toFixed(2)+']'));
                 });
 
                 circles[i].addListener('mouseout',function(){

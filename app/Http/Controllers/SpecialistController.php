@@ -15,7 +15,7 @@ class SpecialistController extends Controller {
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('amAdmin');
     }
 
     public function index(){
