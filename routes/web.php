@@ -18,7 +18,7 @@ Route::get('/changePassword','SpecialistController@showChangePasswordForm');
 Route::get ('/', function() {
     return view('/welcome'); })->name('/');
     
-Route::get('reports','ReportController@editReports')->name('/reports'); 
+Route::get('reports','ReportController@editReports')->name('/reports')->middleware('auth'); 
 Route::get('users', 'SpecialistController@index')->middleware('amAdmin')->name('/users');
 Route::get('devices','DeviceController@index')->name('/devices'); 
 
