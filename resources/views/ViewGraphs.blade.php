@@ -35,23 +35,17 @@
 
             <div class='column-right'>
                 <div class="form-group row radio-buttons">
+                    @foreach($sensors as $sensor )
                     <div class="form-check radio col-md-12">
-                        <label class="radio col-md-6 col-form-label text-md-right" for="sensors">CO</label>
-                        <input class="radio col-md-4 radio-circle" name="sensors" type="radio" value='co'>
+                        <label class="radio col-md-6 col-form-label text-md-right" for="sensors">{{$sensor->value_name . ' ' .$sensor->measuring_unit}}</label>
+                        <input class="radio col-md-4 radio-circle" name="sensors" type="radio" value={{$sensor->value_name}} checked>
                     </div> <br />
-                    <div class="form-check radio col-md-12">
-                        <label class="radio col-md-6 col-form-label text-md-right" for="sensors">NO2</label>
-                        <input class="radio col-md-4 radio-circle" name="sensors" type="radio" value='no2' checked>
-                        
-                    </div> <br />
-                    <div class="form-check radio col-md-12">
-                        <label class="radio col-md-6 col-form-label text-md-right" for="sensors">Temperature</label>
-                        <input class="radio col-md-4 radio-circle" name="sensors" type="radio" value='temperature' >
-                    </div> <br />
+                    @endforeach
+                   
                 </div>
             </div>
         </div>
-        <button type='button' class='btn btn-submit' style='margin : 0 45% 5% 45%' id='apply_filter'>filter </button>
+        <button type='button' class='btn btn-submit' style='margin : 0 45% 5% 45%' id='apply_filter'>filtruoti </button>
     </form>
     <div id="map" class="map"></div>
     

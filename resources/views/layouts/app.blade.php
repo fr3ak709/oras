@@ -64,8 +64,11 @@
                                         {{ __('Pakeisti slaptažodį') }}
                                     </a>
                                     <a class="dropdown-item" href="{{route('/reports')}}">Ataskaitos</a>
-                                    <a class="dropdown-item" href="{{route('/devices')}}">Prietaisai</a>   
-                                    <a class="dropdown-item" href="{{route('/users')}}">Specialistai</a>
+                                    <a class="dropdown-item" href="{{route('/dataDownload')}}">Duomenys</a>
+                                    @if(Auth::user()->role == 'Administrator')
+                                        <a class="dropdown-item" href="{{route('/devices')}}">Prietaisai</a>   
+                                        <a class="dropdown-item" href="{{route('/users')}}">Specialistai</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -18,17 +18,18 @@ Route::get('/changePassword','SpecialistController@showChangePasswordForm');
 Route::get ('/', function() {
     return view('/welcome'); })->name('/');
     
-Route::get('reports','ReportController@index')->name('/reports'); 
+Route::get('reports','ReportController@editReports')->name('/reports'); 
 Route::get('users', 'SpecialistController@index')->middleware('amAdmin')->name('/users');
 Route::get('devices','DeviceController@index')->name('/devices'); 
 
 Route::get('/report/{id}', 'ReportController@download');
 Route::get('/device/{id}', 'SensorController@index');
 
-Route::get('test', 'DataController@generate')->name('/test');
+Route::get('test', 'DataController@dataDownloadView')->name('/test');
 
 Route::get('generate_data','DataController@generate')->name('/generate_data'); 
 Route::get('mapData', 'DataController@getMapData');
+Route::get('dataDownload', 'DataController@dataDownloadView')->name('/dataDownload');
 
 Route::get('viewReports', 'ReportController@index')->name('viewReports');
 Route::get('viewGraphs', 'DataController@index')->name('viewGraphs');
@@ -47,6 +48,9 @@ Route::post('/changePassword','SpecialistController@changePassword')->name('chan
 Route::post('/uploadReport', 'ReportController@create');
 Route::post('/addDevice', 'DeviceController@create');
 Route::post('/addSensor/{id}', 'SensorController@create');
+
+Route::post('/downloadCSV', 'DataController@downloadCSV');
+
 
 
 Route::get('createAdmin', 'Auth\ResetPasswordController@createAdmin')->name('/createAdmin');

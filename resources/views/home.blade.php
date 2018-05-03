@@ -9,6 +9,5 @@
         </div>
     @endif
 
-    <a href={{  url('generate_data') }}>generate data and come back</a>
-    You are logged in!
+    Jūs prisijungėte
 @endsection

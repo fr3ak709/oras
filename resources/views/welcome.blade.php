@@ -1,6 +1,7 @@
 @extends('layouts.app')
+@section('cardHeader')
+    Apie mus
+@stop
 @section('content')
-    <p style='text-align: center;'>  Please Login</p>
-
-    <a href={{  url('generate_data') }}>generate data and come back</a>
+    <p style='text-align: center;'></p>
 @stop

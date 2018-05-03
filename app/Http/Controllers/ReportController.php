@@ -13,18 +13,28 @@ use PDF;
 
 class ReportController extends Controller
 {
+        /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index() {
+            $reports = DB::table('reports')
+            ->orderBy('date', 'title')->get();
+            return view('reports/ViewReports', ['reports'=>$reports]); 
+    }
+    public function editReports() {
         if(Auth::check()) {
             $reports = Report::where('creator_id', '=', Auth::id())->
                 orderBy('date', 'title')->get();
             return view('reports/EditReports', ['reports'=>$reports]);
-        } else { 
-            $reports = DB::table('reports')
-            ->orderBy('date', 'title')->get();
-            return view('reports/ViewReports', ['reports'=>$reports]); 
         }
     }
-
     public function destroy($id) {
         $report = Report::findOrFail($id);
         $yours = $report->creator_id == Auth::id();
@@ -73,7 +83,6 @@ class ReportController extends Controller
             return redirect()->back()->with("error","Jums reikia prisijungti.");
         }
     }
-
     public function save($title, $date, $file) {
         $report = new Report();
         if ( Auth::check() ) {
