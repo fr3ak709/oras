@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('cardHeader')
-    Grafikai
+    Žemėlapis
 @stop
 @section('Styles')
     <link href="{{ secure_asset('/css/mapForm.css') }}" media="all" rel="stylesheet"  type="text/css">

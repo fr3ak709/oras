@@ -27,7 +27,7 @@ function initMap() {
             
             $.ajax({
                 //to-do max time between dates 1 day / 1 week / 1 month ?
-                url: APP_URL.splice(4, 0, "s")+'/mapData',
+                url: APP_URL.splice(4, 0, "s")+'/data',
                 type: 'GET',
                 data: { 
                     date_from: date_from,

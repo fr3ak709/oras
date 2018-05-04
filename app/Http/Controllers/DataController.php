@@ -6,24 +6,33 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use AIVIKS\Sensor_data;
 use AIVIKS\Sensor;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 class DataController extends Controller
 {
-    public function getMapData(){
+    public function getData(){
         if( request()->ajax() ){
             $date_from  = $_GET['date_from'];
             $date_to    = $_GET['date_to'];
             $sensor     = $_GET['sensor'];
-            $data = $this->getSensorData($date_from, $date_to, $sensor);
+            $data = $this->fetchSensorData($date_from, $date_to, $sensor);
+            return $data;
+        }
+    }
+    public function getAvgData(){
+        if( request()->ajax() ){
+            $date_from  = $_GET['date_from'];
+            $date_to    = $_GET['date_to'];
+            $sensor     = $_GET['sensor'];
+            $data = $this->fetchAvgSensorData($date_from, $date_to, $sensor);
             return $data;
         }
     }
 
 
-
-    public function getSensorData ($date_from, $date_to, $sensor) {
+    public function fetchSensorData ($date_from, $date_to, $sensor) {
         $data = Sensor_data::select([
             'sensors.value_name AS value_name', 
             'sensors.value_max AS value_max', 
@@ -40,9 +49,34 @@ class DataController extends Controller
         ->get();
         return $data;
     }
+    public function fetchAvgSensorData ($date_from, $date_to, $sensor) {
+        
+        $date = date('Y-m-d H:i:s');
+        $data = Sensor_data::select(
+            DB::raw('
+                sensors.value_name AS value_name, 
+                sensors.value_max AS value_max, 
+                sensors.measuring_unit AS measuring_unit,
+                AVG(sensor_data.value) AS value,  
+                DATE(sensor_data.date) AS date' 
+            )
+        )
+        ->where('value_name', '=', $sensor)
+        ->whereBetween('date', [
+            $date_from,  
+            $date_to
+        ])
+        ->join('sensors', 'sensors_id', '=', 'sensors.id')
+        ->groupBy(DB::raw('DATE(date)'))
+        ->orderBy('date')
+        ->get();  
+
+        return $data;
+    }
     
     public function generate () {
         $date = date('Y-m-d H:i:s');
+        $date = date('Y-m-d H:i:s',strtotime('-7 days',strtotime($date)));
         $minLat  = 54.82; $maxLat  = 54.96;
         $minLong = 23.76; $maxLong = 24.10;
         $mil = 1000000;
@@ -52,12 +86,22 @@ class DataController extends Controller
         $minAcceleration = 0.0; $maxAcceleration = 10.0; 
         for ($i = 0; $i < 100; $i++) {
             $data = new Sensor_data;
-            $date = date('Y-m-d H:i:s',strtotime('+1 second',strtotime($date)));
+            $date = date('Y-m-d H:i:s',strtotime('+10 minutes',strtotime($date)));
             $data->date = $date;
             $data->lat =  rand((int)($minLat *$mil), (int)($maxLat *$mil))/$mil;
             $data->long = rand((int)($minLong*$mil), (int)($maxLong*$mil))/$mil;
             $data->value =  rand((int)($minCO2 *$mil), (int)($maxCO2 *$mil))/$mil;
             $data->sensors_id = 100;
+            $data->save();
+        }
+        for ($i = 0; $i < 100; $i++) {
+            $data = new Sensor_data;
+            $date = date('Y-m-d H:i:s',strtotime('+10 minutes',strtotime($date)));
+            $data->date = $date;
+            $data->lat =  rand((int)($minLat *$mil), (int)($maxLat *$mil))/$mil;
+            $data->long = rand((int)($minLong*$mil), (int)($maxLong*$mil))/$mil;
+            $data->value =  rand((int)($minCO2 *$mil), (int)($maxCO2 *$mil))/$mil;
+            $data->sensors_id = 102;
             $data->save();
         }
     }
@@ -80,7 +124,7 @@ class DataController extends Controller
         $date_to    = $request->date_to;
         $sensor     = $request->sensors;
 
-        $list = $this->getSensorData($date_from, $date_to, $sensor)->toArray();
+        $list = $this->fetchSensorData($date_from, $date_to, $sensor)->toArray();
         # add headers for each column in the CSV download
         array_unshift($list, array_keys($list[0]));
 
@@ -96,6 +140,11 @@ class DataController extends Controller
         return Response::stream($callback, 200, $headers);
     }
 
+
+    public function chartDataView() {
+        $sensors = Sensor::select(['measuring_unit', 'value_name'])->get()->unique([ 'value_name']);
+        return view('graphs', ['sensors'=>$sensors]);
+    }
 
     public function dataDownloadView()
     {        
