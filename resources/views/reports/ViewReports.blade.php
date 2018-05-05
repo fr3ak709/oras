@@ -5,7 +5,6 @@
 @stop
 
 @section('content')
-    <div class='container'></div>
     <table style='margin: auto; width:80%;'>
         <tr>
             <td style='width:20%;' >Data</td>

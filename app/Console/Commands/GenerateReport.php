@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use AIVIKS\Report;
 use AIVIKS\Sensor_data;
+use AIVIKS\Sensor;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Storage;
@@ -43,29 +45,36 @@ class GenerateReport extends Command
      */
     public function handle()
     {
+
         $date = date("Y-m-d");
-        $data = ['string' , 'array' ];
-        $data = Sensor_data::select(
-            DB::raw('
-                sensors.value_name AS value_name, 
-                sensors.value_max AS value_max, 
-                sensors.measuring_unit AS measuring_unit,
-                AVG(sensor_data.value) AS value,  
-                Date(sensor_data.date) AS date ' 
-            )
-        )
-        ->where('value_name', '=', $sensor)
-        ->whereBetween('date', [
-            date('Y-m-d H:i:s',strtotime('-2 days',strtotime($date ))),  
-            $date 
-        ])
-        ->join('sensors', 'sensors_id', '=', 'sensors.id')
-        ->groupBy(function($date) {
-            return Carbon::parse($date->created_at)->format('h');
-        })
-        ->orderBy('date')
-        ->get();  
-        $file = PDF::loadView('reports/GeneratedReport', ['data'=>$data]);
+        $sensors = Sensor::select( DB::raw (
+            'sensors.value_name AS value_name, 
+             sensors.value_max  AS value_max, 
+             sensors.measuring_unit AS measuring_unit' ) )
+        ->groupBy('value_name')
+        ->get();
+        
+        foreach($sensors as $sensor)
+            $sensor->data = Sensor_data::select(
+                    DB::raw('
+                        AVG(sensor_data.value) AS value,  
+                        HOUR(sensor_data.date) AS hour' 
+                    )
+                )
+                ->where('value_name', '=', $sensor->value_name)
+                ->whereBetween('date', [
+                    date('Y-m-d',strtotime('+1 days',strtotime($date ))),  
+                    date('Y-m-d',strtotime('+3 days',strtotime($date )))
+                ])
+                ->join('sensors', 'sensors_id', '=', 'sensors.id')
+                ->groupBy(DB::raw('hour'))
+                ->orderBy('hour')
+                ->get();
+
+        $file = PDF::loadView('reports/GeneratedReport', [
+            'sensors'=>$sensors, 
+            'date'=>date('Y-m-d',strtotime('+2 days',strtotime($date )))
+        ]);
         $report = new Report();
         $report->creator_id = 101;
         $report->title = 'Generuota ataskaita';

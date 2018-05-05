@@ -31,7 +31,7 @@ class ReportController extends Controller
         $report = Report::findOrFail($id);
         $yours = $report->creator_id == Auth::id();
         if ($yours) { 
-            Storage::disk('public')->delete($report->path);
+            Storage::disk('s3')->delete($report->path);
             $report->delete();
             return redirect()->back()->with("success", $report->title." ištrinta.");
         } else {
@@ -41,16 +41,16 @@ class ReportController extends Controller
 
     public function download($id) {
         $report = Report::findOrFail($id);
-        $exists = Storage::disk('public')->exists($report->path);
+        $exists = Storage::disk('s3')->exists($report->path);
         if($exists) {
-            return  Storage::disk('public')->download($report->path, $report->date.' Ataskaita.pdf');
+            return  Storage::disk('s3')->download($report->path, $report->date.' Ataskaita.pdf');
         }
     }
     public function viewReport($id) {
         $report = Report::findOrFail($id);
-        $exists = Storage::disk('public')->exists($report->path);
+        $exists = Storage::disk('s3')->exists($report->path);
         if($exists) {
-            return  Storage::disk('public')->url($report->path);
+            return  Storage::disk('s3')->url($report->path);
         }
     }
 
@@ -84,22 +84,11 @@ class ReportController extends Controller
         }
         $report->title = $title;
         $report->date = $date;
-        $path = Storage::disk('public')->putFile('Reports', $file);
+        $path = Storage::disk('s3')->putFile('Reports', $file);
         $report->path = $path;
         $report->save();
 
         return true;
     }
 
-    public function generate() {
-        /* 
-        $title = 'date + is genrated';
-        $date = 'date atm'; 
-        $this->save($title, $date, $pdf );
-        */
-        $data = ['string' , 'array'];
-        $pdf = PDF::loadView('reports/GeneratedReport', ['data'=>$data]);
-
-        return $pdf->download('invoice.pdf');
-    }
 }

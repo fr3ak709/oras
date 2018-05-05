@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="shortcut icon" href="{{{ secure_asset('/pictures/logo/logo.png') }}}">
-    <title>{{ config('AIVIKS', 'AIVIKS') }}</title> 
+    <title>{{ config('Oro taršos stebėjim', 'Oro taršos stebėjimas') }}</title> 
 
     <!-- Scripts -->
     
@@ -31,7 +31,7 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ route('/') }}">
                     <img src="{{ secure_asset('/pictures/logo/logo.png') }}" style='width:36px;height:48px;'>
-                    {{ config('AIVIKS', 'AIVIKS') }}
+                    {{ config('Oro taršos stebėjimas', 'Oro taršos stebėjimas') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

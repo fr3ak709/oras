@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use AIVIKS\Sensor_data;
 use AIVIKS\Sensor;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
@@ -21,6 +20,41 @@ class DataController extends Controller
             return $data;
         }
     }
+
+    public function test() {
+        $date = date("Y-m-d");
+        $data = ['string' , 'array' ];
+        $sensors = Sensor::select( DB::raw (
+            'sensors.value_name AS value_name, 
+             sensors.value_max  AS value_max, 
+             sensors.measuring_unit AS measuring_unit' ) )
+        ->groupBy('value_name')
+        ->get();
+        
+        $data = [ ];
+        foreach($sensors as $sensor)
+            array_push ( 
+                $data ,
+                Sensor_data::select(
+                    DB::raw('
+                        AVG(sensor_data.value) AS value,  
+                        HOUR(sensor_data.date) AS hour' 
+                    )
+                )
+                ->where('value_name', '=', $sensor->value_name)
+                ->whereBetween('date', [
+                    date('Y-m-d',strtotime('+1 days',strtotime($date ))),  
+                    date('Y-m-d',strtotime('+3 days',strtotime($date )))
+                ])
+                ->join('sensors', 'sensors_id', '=', 'sensors.id')
+                ->groupBy(DB::raw('hour'))
+                ->orderBy('date')
+                ->get()
+            );  
+        //echo $data[0][1]->value;
+         echo $data[0];
+    }
+
     public function getAvgData(){
         if( request()->ajax() ){
             $date_from  = $_GET['date_from'];
@@ -75,8 +109,8 @@ class DataController extends Controller
     }
     
     public function generate () {
-        $date = date('Y-m-d H:i:s');
-        $date = date('Y-m-d H:i:s',strtotime('-7 days',strtotime($date)));
+        $startdate = date('Y-m-d H:i:s');
+        $startdate = date('Y-m-d H:i:s',strtotime('+2 days',strtotime($startdate)));
         $minLat  = 54.82; $maxLat  = 54.96;
         $minLong = 23.76; $maxLong = 24.10;
         $mil = 1000000;
@@ -84,6 +118,7 @@ class DataController extends Controller
         $minNO2 = 20.0; $maxNO2 = 200.0; 
         $minTemperature = 15.0; $maxTemperature = 30.0; 
         $minAcceleration = 0.0; $maxAcceleration = 10.0; 
+        $date = $startdate;
         for ($i = 0; $i < 100; $i++) {
             $data = new Sensor_data;
             $date = date('Y-m-d H:i:s',strtotime('+10 minutes',strtotime($date)));
@@ -94,6 +129,7 @@ class DataController extends Controller
             $data->sensors_id = 100;
             $data->save();
         }
+        $date = $startdate;
         for ($i = 0; $i < 100; $i++) {
             $data = new Sensor_data;
             $date = date('Y-m-d H:i:s',strtotime('+10 minutes',strtotime($date)));

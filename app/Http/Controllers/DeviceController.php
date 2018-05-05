@@ -34,7 +34,7 @@ class DeviceController extends Controller
         return redirect()->back()->with("success", "Prietaisas pridėtas.");
     } 
 
-    public function destroyDevice() {
+    public function destroy($id) {
         $device = Device::findOrFail($id);
         $device->delete();
         return redirect()->back()->with("success", $device->name." Prietaisas buvo ištrintas sėkmingai.");
