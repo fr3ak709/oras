@@ -22,16 +22,16 @@ function initMap() {
             var city = 'Kaunas';
             
             function getHttpsUrl() { //because heroku uses http for AJAX get requests
-                String.prototype.splice = function(idx, rem, str) {
-                    return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
-                };
+
                 var httpsDataUrl = APP_URL+'/data';
                 if(APP_URL.charAt(5)==='s') {
                     httpsDataUrl = httpsDataUrl.splice(4, 0, "s");
                 }
                 return httpsDataUrl;
             }
-            
+            String.prototype.splice = function(idx, rem, str) {
+                return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
+            };
             $.ajax({
                 //to-do max time between dates 1 day / 1 week / 1 month ?
                 url: APP_URL.splice(4, 0, "s")+'/data',
