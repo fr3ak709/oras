@@ -37,21 +37,30 @@ class SensorController extends Controller
         return redirect()->back()->with("success", $devices_sensor->name." Pašalintas sensorius iš prietaiso.");
     } 
 
-    public function index($id) {
-        $sensors = Devices_sensor::select([
+    public function index($devices_id) {    //devices id. shows sensors of the device
+        $sensors = Sensor::select(['id', 'name', 'value_name'])->get();
+        $devices_sensors = Devices_sensor::select([
                 'devices_sensors.id AS id', 
                 'devices_sensors.date AS date', 
                 'sensors.expected_operating_time AS expected_operating_time', 
                 'sensors.name AS name',
-                'sensors.value_name AS value_name'
-        ])->where('devices_id', '=', $id)
-        ->join('sensors', 'sensors.id', '=', 'sensors_id')->get();
-        foreach($sensors as $sensor ) {
-            $ammount_of_days =  floor(365 * $sensor->expected_operating_time );
-            $sensor->valid_till = date('Y-m-d', strtotime('+'. $ammount_of_days .' days', strtotime($sensor->date)) ); 
-            $sensor->needs_replacing = ( $sensor->valid_till < date("Y-m-d") );
+                'sensors.value_name AS value_name',
+                'devices.name AS devices_name'
+        ])->where('devices_id', '=', $devices_id)
+        ->join('sensors', 'sensors.id', '=', 'sensors_id')
+        ->join('devices', 'devices.id', '=', 'devices_id')
+        ->get();
+        foreach($devices_sensors as $devices_sensor ) { //check if sensor needs replacing
+            $ammount_of_days =  floor(365 * $devices_sensor->expected_operating_time );
+            $devices_sensor->valid_till = date('Y-m-d', strtotime('+'. $ammount_of_days .' days', strtotime($devices_sensor->date)) ); 
+            $devices_sensor->needs_replacing = ( $devices_sensor->valid_till < date("Y-m-d") );
         }
-        return view('devices/sensors/EditSensors', ['sensors'=> $sensors, 'devices_id' => $id ]); 
+        return view('devices/sensors/EditSensors', [
+            'devices_sensors'=> $devices_sensors, 
+            'devices_id' => $devices_id, 
+            'devices_name'=>$sensors[0]->devices_name,
+            'sensors' => $sensors
+        ]); 
     }
 
     public function createView($id) {

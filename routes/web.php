@@ -25,7 +25,7 @@ Route::get('devices','DeviceController@index')->name('/devices');
 Route::get('/report/{id}', 'ReportController@download');
 Route::get('/device/{id}', 'SensorController@index');
 
-Route::get('test', 'DataController@test')->name('/test');
+Route::get('test', 'DataController@chartDataView')->name('/test');
 Route::get('generate', 'DataController@generate')->name('/generate');
 
 Route::get('generate_data','DataController@generate')->name('/generate_data'); 
@@ -34,7 +34,8 @@ Route::get('avgdata', 'DataController@getAvgData');
 Route::get('dataDownload', 'DataController@dataDownloadView')->name('/dataDownload');
 
 Route::get('viewReports', 'ReportController@index')->name('viewReports');
-Route::get('viewGraphs', 'DataController@index')->name('viewGraphs');
+Route::get('map', 'DataController@index')->name('map');
+Route::get('graph', 'DataController@chartDataView')->name('graph');
 
 Route::get('newReport',function () {return view('reports/create');})->name('newReport');
 Route::get('newDevice',function () {return view('devices/create');})->name('newDevice');

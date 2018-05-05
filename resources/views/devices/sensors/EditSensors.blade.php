@@ -1,9 +1,12 @@
 @extends('layouts.app')
+@section('Scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+@stop
 @section('cardHeader')
-    Valdyti prietaiso sensorius
+    Prietaiso '<strong>{{$devices_name}}</strong>' sensoriai
     <a class='btn btn-info right'  href={{ url('devices') }}> Prietaisai     </a>
-    <a class='btn btn-info right'  href={{ url('newSensor', $devices_id) }}> Pridėti Naują     </a>
-    
+    <button  class='btn btn-info right'  data-toggle="modal" data-target="#myModal"> Pridėti sensorių</button>  
 @stop
 @section('content')
     <table style='margin: auto;'>
@@ -14,7 +17,7 @@
             <td style='width:30%'><strong>Matuojama</strong></td>
             <td></td>
         </tr>        
-        @foreach ($sensors as $item)
+        @foreach ($devices_sensors as $item)
             @if( $item->needs_replacing )
                 <tr class='table-row' style='background: #ff9bb7'>
             @else
@@ -36,4 +39,5 @@
             </tr>
         @endforeach
     </table>
+    @include('devices/sensors/create')
 @stop

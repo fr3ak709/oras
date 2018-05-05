@@ -41,7 +41,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto navigation">
 
-                        <li> <a class='nav-link' href="{{route('viewGraphs')}}">Grafikai</a> </li>    
+                        <li> <a class='nav-link' href="{{route('map')}}">Grafikai</a> </li>    
                         <li> <a class='nav-link' href="{{route('viewReports')}}">Ataskaitos</a> </li>
 
                     </ul>
@@ -63,11 +63,11 @@
                                     <a class="dropdown-item" href="/changePassword">
                                         {{ __('Pakeisti slaptažodį') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{route('/reports')}}">Ataskaitos</a>
-                                    <a class="dropdown-item" href="{{route('/dataDownload')}}">Duomenys</a>
+                                    <a class="dropdown-item" href="{{route('/dataDownload')}}">Parsisiųsti Duomenis</a>
+                                    <a class="dropdown-item" href="{{route('/reports')}}">Valdyti ataskaitas</a>
                                     @if(Auth::user()->role == 'Administrator')
-                                        <a class="dropdown-item" href="{{route('/devices')}}">Prietaisai</a>   
-                                        <a class="dropdown-item" href="{{route('/users')}}">Specialistai</a>
+                                        <a class="dropdown-item" href="{{route('/devices')}}">Valdyti prietaisus</a>   
+                                        <a class="dropdown-item" href="{{route('/users')}}">Valdyti specialistus</a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('cardHeader')
-    Žemėlapis
+<div style='display: flex'>
+    <a  class='btn btn-info left' href="{{route('map')}}"   style='flex: 1; colour: #ffffff;' pressed> Žemėlapis</a>
+    <a  class='btn btn-info right'href="{{route('graph')}}" style='flex: 1; background: #0f7282; colour: #ffffff;'> Grafikas</a>
+</div>
 @stop
 @section('Styles')
     <link href="{{ secure_asset('/css/mapForm.css') }}" media="all" rel="stylesheet"  type="text/css">
@@ -23,14 +26,7 @@
                         <input class='form-control' type='date' id='date_to' value={{date("Y-m-d")}} >
                     </div>
                 </div>
-                <div class="form-group row ">
-                    <label for='min_value' class="col-md-6 col-form-label text-md-right">{{ __('Vertės viršijančios % leistino dydžio: ') }}</label>
                 
-                    <div class='col-md-4'>
-                        <input class='form-control slider' type='range' id='min_value' value='0' >
-                    </div>
-                    <div class="col-md-2  text-md-right" id='min_value_text'></div>
-                </div>
             </div>
 
             <div class='column-right'>
@@ -47,26 +43,21 @@
         </div>
         <button type='button' class='btn btn-submit' style='margin : 0 45% 5% 45%' id='apply_filter'>filtruoti </button>
     </form>
-    <div id="map" class="map"></div>
-    
-
-    <script type="text/javascript">
-        var APP_URL = {!! json_encode(url('/')) !!}
-    </script>
-    <script src="{{ secure_asset('/js/map.js') }}" >
-        </script>
-    <script src="{{ secure_asset('/js/range.js') }}" >
-        </script>
+    <canvas id='myChart'>
+    </canvas>
 
     <script
         src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous">
     </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxGurAngBBEOYVVW1f--J9KtOlBF-yWtE&callback=initMap">
-    </script>    
-    
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js'>
+    </script>
+        <script type="text/javascript">
+        var APP_URL = {!! json_encode(url('/')) !!}
+    </script>
+    <script src="{{ secure_asset('/js/chart.js') }}" >
+        </script>
 
 
 @stop

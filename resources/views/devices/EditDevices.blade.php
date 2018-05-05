@@ -1,7 +1,10 @@
 @extends('layouts.app')
+@section('Scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+@stop
 @section('cardHeader')
     Prietaisai
-    <a class='btn btn-info right' href={{ url('newDevice') }}> Pridėti naują </a>
+    <button  class='btn btn-info right'  data-toggle="modal" data-target="#myModal"> Pridėti prietaisą</button>
 @stop
 @section('content')
     <table style='margin: auto;'>
@@ -42,4 +45,5 @@
             </tr>
         @endforeach
     </table>
+    @include('devices/create')
 @stop

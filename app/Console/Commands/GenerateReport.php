@@ -1,7 +1,5 @@
 <?php
-
 namespace AIVIKS\Console\Commands;
-
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use AIVIKS\Report;
@@ -11,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Storage;
-
 class GenerateReport extends Command
 {
     /**
@@ -20,14 +17,12 @@ class GenerateReport extends Command
      * @var string
      */
     protected $signature = 'generate:report';
-
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Automatically generates air polution report';
-
     /**
      * Create a new command instance.
      *
@@ -37,15 +32,13 @@ class GenerateReport extends Command
     {
         parent::__construct();
     }
-
     /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle()
-    {
-
+    {  //execute from ssh
         $date = date("Y-m-d");
         $sensors = Sensor::select( DB::raw (
             'sensors.value_name AS value_name, 
@@ -70,7 +63,6 @@ class GenerateReport extends Command
                 ->groupBy(DB::raw('hour'))
                 ->orderBy('hour')
                 ->get();
-
         $file = PDF::loadView('reports/GeneratedReport', [
             'sensors'=>$sensors, 
             'date'=>date('Y-m-d',strtotime('+2 days',strtotime($date )))
@@ -80,7 +72,7 @@ class GenerateReport extends Command
         $report->title = 'Generuota ataskaita';
         $report->date = $date;
         $unique_name = $date.'.pdf';
-        Storage::disk('public')->put($unique_name, $file->output());
+        Storage::disk('s3')->put($unique_name, $file->output());
         $report->path = $unique_name;
         $report->save();
     }

@@ -23,8 +23,7 @@ class DataController extends Controller
 
     public function test() {
         $date = date("Y-m-d");
-        $data = ['string' , 'array' ];
-        $sensors = Sensor::select( DB::raw (
+     /*    $sensors = Sensor::select( DB::raw (
             'sensors.value_name AS value_name, 
              sensors.value_max  AS value_max, 
              sensors.measuring_unit AS measuring_unit' ) )
@@ -50,9 +49,13 @@ class DataController extends Controller
                 ->groupBy(DB::raw('hour'))
                 ->orderBy('date')
                 ->get()
-            );  
+            );   */
         //echo $data[0][1]->value;
-         echo $data[0];
+        $data = $this->fetchAvgSensorData( 
+            date('Y-m-d',strtotime('-7 days',strtotime($date ))), 
+            $date, 
+            'co');
+         return view('graph', ['data'=>$data]);
     }
 
     public function getAvgData(){
@@ -179,7 +182,7 @@ class DataController extends Controller
 
     public function chartDataView() {
         $sensors = Sensor::select(['measuring_unit', 'value_name'])->get()->unique([ 'value_name']);
-        return view('graphs', ['sensors'=>$sensors]);
+        return view('graph', ['sensors'=>$sensors]);
     }
 
     public function dataDownloadView()
@@ -196,7 +199,7 @@ class DataController extends Controller
     public function index()
     {
         $sensors = Sensor::select(['measuring_unit', 'value_name'])->get()->unique([ 'value_name']);
-        return view('ViewGraphs', ['sensors'=>$sensors]);
+        return view('map', ['sensors'=>$sensors]);
     }
 
 
