@@ -17,11 +17,10 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        $this->app['request']->server->set('HTTPS', true);
-        /* if (Auth::guard($guard)->check()) {
+        if (Auth::guard($guard)->check()) {
             return redirect('/home');
         }
 
-        return $next($request); */
+        return $next($request);
     }
 }
