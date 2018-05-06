@@ -30,6 +30,11 @@
                         @endforeach
                     </a>
                 </td>
+                <td>
+                    <form action="{{ url('device', $item->id ) }}">
+                        <button class='btn btn-info'>Sensoriai</button>
+                    </form>
+                </td>
                 <td> 
                     <form action="{{ url('device', $item->id ) }}" method="POST">
                         {{ csrf_field() }}
@@ -37,11 +42,7 @@
                         <button class='btn btn-danger' onclick='return confirm("Ar tikrai norite pašalinti prietaisą {{$item->title}}?")'>Pašalinti</button>
                     </form>
                 </td>
-                <td>
-                    <form action="{{ url('device', $item->id ) }}">
-                        <button class='btn btn-danger'>Sensoriai</button>
-                    </form>
-                </td>
+
             </tr>
         @endforeach
     </table>
