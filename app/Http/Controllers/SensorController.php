@@ -39,7 +39,7 @@ class SensorController extends Controller
             $sensor->value_max = floatval($request->value_max);
             $sensor->save();
         } catch (\Exception $e) {
-            return redirect()->back()->with("error",  $e." Įvyko klaida.");
+            return redirect()->back()->with("error",  $e->getMessage()." Įvyko klaida.");
         }
         return redirect()->back()->with("success",  $sensor->name." Sensorius pridėtas.");
     }   
@@ -59,7 +59,7 @@ class SensorController extends Controller
             $sensor->value_max = floatval($request->value_max);
             $sensor->save();
         } catch (\Exception $e) {
-            return redirect()->back()->with("error",  $e." Įvyko klaida.");
+            return redirect()->back()->with("error",  $e->getMessage()." Įvyko klaida.");
         }
         return redirect()->back()->with("success",  $sensor->name." Sensorius atnaujintas.");
     }
@@ -72,7 +72,7 @@ class SensorController extends Controller
             $devices_sensor->devices_id = $device_id;
             $devices_sensor->save();  
         } catch (\Exception $e) {
-            return redirect()->back()->with("error",  $e." Įvyko klaida.");
+            return redirect()->back()->with("error",  $e->getMessage()." Įvyko klaida.");
         }
         return redirect()->back()->with("success", "Sensorius pridėtas.");
     }
@@ -82,7 +82,7 @@ class SensorController extends Controller
         try{
             $devices_sensor->delete();  
         } catch (\Exception $e) {
-            return redirect()->back()->with("error",  $e." Įvyko klaida.");
+            return redirect()->back()->with("error",  $e->getMessage()." Įvyko klaida.");
         }
         return redirect()->back()->with("success", $devices_sensor->name." Pašalintas sensorius iš prietaiso.");
     } 
@@ -91,7 +91,7 @@ class SensorController extends Controller
             $sensor = Sensor::findOrFail($id);
             $sensor->delete();    
         } catch (\Exception $e) {
-            return redirect()->back()->with("error",  $e." Įvyko klaida.");
+            return redirect()->back()->with("error",  $e->getMessage()." Įvyko klaida.");
         }
         return redirect()->back()->with("success", $sensor->name." Pašalintas sensorius.");
     } 
@@ -116,7 +116,7 @@ class SensorController extends Controller
                 $devices_sensor->needs_replacing = ( $devices_sensor->valid_till < date("Y-m-d") );
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with("error",  $e." Įvyko klaida.");
+            return redirect()->back()->with("error",  $e->getMessage()." Įvyko klaida.");
         }
         return view('devices/sensors/EditDevicesSensors', [
             'devices_sensors'=> $devices_sensors, 
@@ -145,7 +145,7 @@ class SensorController extends Controller
                 ->count();
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with("error",  $e." Įvyko klaida.");
+            return redirect()->back()->with("error",  $e->getMessage()." Įvyko klaida.");
         }
         return view('sensors/EditSensors', ['sensors'=>$sensors]);
     }

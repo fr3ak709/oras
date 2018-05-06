@@ -63,7 +63,7 @@
                                     <a class="dropdown-item" href="/changePassword">
                                         {{ __('Pakeisti slaptažodį') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{route('/dataDownload')}}">Parsisiųsti Duomenis</a>
+                                    <a class="dropdown-item" href="{{route('/dataDownload')}}">Parsisiųsti duomenis</a>
                                     <a class="dropdown-item" href="{{route('/reports')}}">Valdyti ataskaitas</a>
                                     @if(Auth::user()->role == 'Administrator')
                                         <a class="dropdown-item" href="{{route('/devices')}}">Valdyti prietaisus</a>

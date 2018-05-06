@@ -18,6 +18,8 @@
             <tr class='table-row'>
                 <td><a href={{ url('report' , $item->id ) }}>{{ $item->date }}</a></td>
                 <td><a href={{ url('report' , $item->id ) }}>{{ $item->title }}</a></td>
+                <td>
+                    <a class='btn btn-info' href={{ url('report' , $item->id ) }}>Parsisiųsti</a>
                 <td> 
                     <form action="{{ url('report', $item->id ) }}" method="POST">
                         {{ csrf_field() }}

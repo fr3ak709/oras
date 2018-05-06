@@ -34,7 +34,7 @@ Route::get('generate', 'DataController@generate')->name('/generate');
 Route::get('generate_data','DataController@generate')->name('/generate_data'); 
 Route::get('data', 'DataController@getData');
 Route::get('avgdata', 'DataController@getAvgData');
-Route::get('dataDownload', 'DataController@dataDownloadView')->name('/dataDownload');
+Route::get('dataDownload', 'DataController@dataDownloadView')->middleware('auth')->name('/dataDownload');
 
 // Guest navigation options 
 Route::get('viewReports', 'ReportController@index')->name('viewReports');
