@@ -17,7 +17,7 @@ class HttpsProtocol
     {/* 
         if (( $request->header('X-Forwarded-Proto') !== 'https' ) && env('APP_ENV') === 'prod') {
             return redirect()->secure($request->getRequestUri());
-        }
-        return $next($request);  */
+        }*/
+        return $next($request);  
     }
 }
