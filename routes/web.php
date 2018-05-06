@@ -12,7 +12,7 @@
 */
 
 Route::get ('/home', 'HomeController@index')->name('/home');\
-Auth::routes()->middleware('HttpsProtocol');
+Auth::routes();
 Route::get('/changePassword','SpecialistController@showChangePasswordForm');
 
 Route::get ('/', function() {
