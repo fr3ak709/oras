@@ -24,15 +24,15 @@ class SetForeignKeys extends Migration
         }); */
 /*         Schema::table('sensor_data', function($table) {
             $table->foreign('sensors_id')->references('id')
-            ->on('sensors');
+            ->on('sensors')->onDelete('cascade');
             $table->foreign('streets_id')->references('id')
-            ->on('streets');
+            ->on('streets')->onDelete('set null');
         }); */
 /*         Schema::table('devices_sensors', function($table) {
             $table->foreign('devices_id')->references('id')
             ->on('devices')->onDelete('cascade');
             $table->foreign('sensors_id')->references('id')
-            ->on('sensors');
+            ->on('sensors')->onDelete('cascade');
         }); */
 /*         Schema::table('reports', function($table) {
             $table->foreign('creator_id')->references('id')

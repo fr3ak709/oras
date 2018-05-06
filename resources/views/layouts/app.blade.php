@@ -66,7 +66,8 @@
                                     <a class="dropdown-item" href="{{route('/dataDownload')}}">Parsisiųsti Duomenis</a>
                                     <a class="dropdown-item" href="{{route('/reports')}}">Valdyti ataskaitas</a>
                                     @if(Auth::user()->role == 'Administrator')
-                                        <a class="dropdown-item" href="{{route('/devices')}}">Valdyti prietaisus</a>   
+                                        <a class="dropdown-item" href="{{route('/devices')}}">Valdyti prietaisus</a>
+                                        <a class="dropdown-item" href="{{route('/sensors')}}">Valdyti sensorius</a>      
                                         <a class="dropdown-item" href="{{route('/users')}}">Valdyti specialistus</a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -83,19 +84,19 @@
         </nav>
 
         <main >
-            <div class='container' style='padding:2vh 0 0 0'>
+            <div class='container' style='padding:2vh 0 0 0;'>
                 <div class="row" >
                         @if (session('error'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger" style="width: 100%">
                                 {{ session('error') }}
                             </div>
                         @endif
                         @if (session('success'))
-                            <div class="alert alert-success">
+                            <div class="alert alert-success" style="width: 100%">
                                 {{ session('success') }}
                             </div>
                         @endif
-                        <div class="card"style='width:100vw'>
+                        <div class="card"style='width:100%; margin:auto;'>
                             <div class="card-header">
                                 @yield('cardHeader')
                             </div>

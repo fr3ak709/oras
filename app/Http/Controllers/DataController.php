@@ -133,16 +133,7 @@ class DataController extends Controller
             $data->save();
         }
         $date = $startdate;
-        for ($i = 0; $i < 100; $i++) {
-            $data = new Sensor_data;
-            $date = date('Y-m-d H:i:s',strtotime('+10 minutes',strtotime($date)));
-            $data->date = $date;
-            $data->lat =  rand((int)($minLat *$mil), (int)($maxLat *$mil))/$mil;
-            $data->long = rand((int)($minLong*$mil), (int)($maxLong*$mil))/$mil;
-            $data->value =  rand((int)($minCO2 *$mil), (int)($maxCO2 *$mil))/$mil;
-            $data->sensors_id = 102;
-            $data->save();
-        }
+
     }
 
     

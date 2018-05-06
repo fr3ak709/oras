@@ -24,7 +24,7 @@
         </div>
         <!-- Modal footer -->
         <div class="modal-footer">
-            <button  class='btn btn-info' type='submit' name='button'>Pridėti pritaisą</button>
+            <button  class='btn btn-info' type='submit' name='button'>Pridėti</button>
         </div>
         
       </div>
