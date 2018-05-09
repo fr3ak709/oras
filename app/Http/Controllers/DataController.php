@@ -68,12 +68,8 @@ class DataController extends Controller
         }
     }
 
-
     public function fetchSensorData ($date_from, $date_to, $sensor) {
         $data = Sensor_data::select([
-            'sensors.value_name AS value_name', 
-            'sensors.value_max AS value_max', 
-            'sensors.measuring_unit AS measuring_unit', 
          // 'sensors.max_value AS max_value',
             'sensor_data.value AS value', 
             'sensor_data.date AS date',
@@ -84,6 +80,10 @@ class DataController extends Controller
         ->whereBetween('date', [$date_from, $date_to])
         ->join('sensors', 'sensors_id', '=', 'sensors.id')
         ->get();
+        foreach ($data as $item) {
+            $item->value = number_format($item->value, 2, '.', '');
+
+        }
         return $data;
     }
     public function fetchAvgSensorData ($date_from, $date_to, $sensor) {
@@ -136,7 +136,6 @@ class DataController extends Controller
 
     }
 
-    
     public function downloadCSV(Request $request)
     {
         Log::debug([ $request->date_from, $request->date_to, $request->sensors]);
@@ -178,7 +177,7 @@ class DataController extends Controller
 
     public function dataDownloadView()
     {        
-        $sensors = Sensor::select(['measuring_unit', 'value_name'])->get()->unique([ 'value_name']);
+        $sensors = Sensor::select(['measuring_unit', 'value_name', 'value_max'])->get()->unique([ 'value_name']);
         return view('GetDataView', ['sensors'=>$sensors]);
     }
 
@@ -189,7 +188,8 @@ class DataController extends Controller
      */
     public function index()
     {
-        $sensors = Sensor::select(['measuring_unit', 'value_name'])->get()->unique([ 'value_name']);
+
+        $sensors = Sensor::select(['measuring_unit', 'value_name', 'value_max'])->get()->unique([ 'value_name']);
         return view('map', ['sensors'=>$sensors]);
     }
 

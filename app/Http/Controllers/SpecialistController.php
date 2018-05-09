@@ -24,9 +24,13 @@ class SpecialistController extends Controller {
     }
 
     public function destroy($id) {
-        $item = User::findOrFail($id);
-        $item->delete();
-        return redirect('/users');
+        $specialist = User::findOrFail($id);
+        if($specialist->role=='Administrator') {
+            return redirect()->back()->with("error","Bandodte išrinti administratorių");
+        }
+        $email = $specialist->email;
+        $specialist->delete();
+        return redirect()->back()->with("success", $email." vartotojas paanaikintas");
     }
 
     public function showChangePasswordForm(){

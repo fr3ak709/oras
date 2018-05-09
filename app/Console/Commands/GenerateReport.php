@@ -56,8 +56,8 @@ class GenerateReport extends Command
                 )
                 ->where('value_name', '=', $sensor->value_name)
                 ->whereBetween('date', [
-                    date('Y-m-d',strtotime('+1 days',strtotime($date ))),  
-                    date('Y-m-d',strtotime('+3 days',strtotime($date )))
+                    date('Y-m-d',strtotime('-1 days',strtotime($date ))),  
+                    $date
                 ])
                 ->join('sensors', 'sensors_id', '=', 'sensors.id')
                 ->groupBy(DB::raw('hour'))
@@ -65,10 +65,10 @@ class GenerateReport extends Command
                 ->get();
         $file = PDF::loadView('reports/GeneratedReport', [
             'sensors'=>$sensors, 
-            'date'=>date('Y-m-d',strtotime('+2 days',strtotime($date )))
+            'date'=>date('Y-m-d',strtotime('-1 days',strtotime($date )))
         ]);
         $report = new Report();
-        $report->creator_id = 101;
+        $report->creator_id = 105;
         $report->title = 'Generuota ataskaita';
         $report->date = $date;
         $unique_name = $date.'.pdf';

@@ -3,32 +3,37 @@ function initMap() {
     var kaunas = new google.maps.LatLng( 54.90, 23.92);
     var circles = [];
     var map;
-    var max_value = 0;
+    var value_max = 0;
+    var value_name = '';
     var measuring_unit = '';
-
+    var colourBlack='#000000', colourRed='#ff5e7e', colourYellow='#f9ff8e', colourGreen='#8eff97';
+    var startBlack=1, startRed=0.9, startYellow=0.75;
+    var date_from = document.getElementById("date_from").value;
+    var date_to   = document.getElementById("date_to").value;
     map = new google.maps.Map(document.getElementById('map'), {
     zoom: 11,
     center: kaunas,
     mapTypeId: 'terrain'
     });
 
+
     $(document).ready(function(){
         sendRequest();      //loads the markers
-        
+        setLegend();
+        setMapName();
         function sendRequest() {
-            var date_from = document.getElementById("date_from").value;
-            var date_to   = document.getElementById("date_to").value;
-            var sensor    = $('input[name=sensors]:checked').val();
-            var city = 'Kaunas';
-            
-            function getHttpsUrl() { //because heroku uses http for AJAX get requests
-
-                var httpsDataUrl = APP_URL+'/data';
-                if(APP_URL.charAt(5)==='s') {
-                    httpsDataUrl = httpsDataUrl.splice(4, 0, "s");
+            sensor    = $('input[name=sensors]:checked').val();
+            date_from = document.getElementById("date_from").value;
+            date_to   = document.getElementById("date_to").value;
+            sensors.forEach(element => {
+                if(element.value_name == sensor) {
+                    value_name = element.value_name;
+                    value_max = element.value_max;
+                    measuring_unit = element.measuring_unit;
                 }
-                return httpsDataUrl;
-            }
+            }); 
+            
+
             String.prototype.splice = function(idx, rem, str) {
                 return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
             };
@@ -47,7 +52,7 @@ function initMap() {
                 }
             });
         }
-
+        
         function resetMap() {
             for (var i = 0; i < circles.length; i++) {
                 circles[i].setMap(null);
@@ -57,10 +62,8 @@ function initMap() {
         //puts markers on the map
         function updateMap(responseArray) {
             resetMap();
-            max_value = responseArray[0].value_max;
-            measuring_unit = responseArray[0].measuring_unit;
             for (let i = 0; i < responseArray.length; i++) {
-                var props = setProps(responseArray[i].value, max_value);
+                var props = setProps(responseArray[i].value);
                 circles[i] = new google.maps.Circle({
                     value:  responseArray[i].value,
                     date: responseArray[i].date,
@@ -71,6 +74,8 @@ function initMap() {
                     center: new google.maps.LatLng(responseArray[i].lat, responseArray[i].long),
                     radius: 100,
                 });
+
+
                 //circle is the google.maps.Circle-instance
                 circles[i].addListener('mouseover',function(){
                     this.getMap().getDiv().setAttribute('title',('DATA:'+this.get('date')+' [vertė:'+Number(this.get('value')).toFixed(2)+measuring_unit+']'));
@@ -81,46 +86,69 @@ function initMap() {
                 });
             }
         }
-        
+
+        function setLegend () {
+            var textBlackElement = document.getElementById("textBlack");
+            var textRedElement = document.getElementById("textRed");
+            var textYellowElement = document.getElementById("textYellow");
+            var textGreenElement = document.getElementById("textGreen");
+            var colourBlackElement = document.getElementById("colourBlack");
+            var colourRedElement = document.getElementById("colourRed");
+            var colourYellowElement = document.getElementById("colourYellow");
+            var colourGreenElement = document.getElementById("colourGreen");
+            colourBlackElement.style.backgroundColor=colourBlack;
+            colourRedElement.style.backgroundColor=colourRed;
+            colourYellowElement.style.backgroundColor=colourYellow;
+            colourGreenElement.style.backgroundColor=colourGreen;
+            textBlackElement.innerHTML      = 'virš '+ value_max + ' ' + measuring_unit;
+            textRedElement.innerHTML        = 'iki ' + value_max*startBlack + ' ' + measuring_unit;
+            textYellowElement.innerHTML   = 'iki ' + value_max*startRed + ' ' + measuring_unit;
+            textGreenElement.innerHTML    = 'iki ' + value_max*startYellow + ' ' + measuring_unit;
+        }
+        function setMapName () {
+            document.getElementById("mapName").innerHTML = 'Žemėlapis \''+value_name + '\' nuo: '+date_from + ' iki: '+date_to;
+        }
         //assigns markers values on the map
-        function setProps(value, valueMAX,
+        function setProps(value, 
             opacityBlack= 1, opacityDark= 1, opacityLight= 1, opacityWhite= 1, 
-            colourBlack='#000000', colourDark='#ff5e7e', colourLight='#f9ff8e', colourWhite='#8eff97'
+            
         ) {
-            if (value > valueMAX*0.95) 
+            if (value > value_max*startBlack) 
                 return  {
                     colour: colourBlack,
                     opacity: opacityBlack,
                 };
-            if (value > valueMAX*0.75)
+            if (value > value_max*startRed)
                 return  {
-                    colour: colourDark,
+                    colour: colourRed,
                     opacity: opacityDark,
                 };
-            if (value > valueMAX*0.55)
+            if (value > value_max*startYellow)
                 return  {
-                    colour: colourLight,
+                    colour: colourYellow,
                     opacity: opacityLight,
                 };
             if (value)   
                 return {
-                    colour: colourWhite,
+                    colour: colourGreen,
                     opacity: opacityWhite,
                 };
             return {
-                    colour: colourWhite,
+                    colour: colourGreen,
                     opacity: 0,
                 };
         }
 
         $('#apply_filter').click(function(){
             sendRequest();
+            setMapName();
+            setLegend();
         });
 
         $('#min_value').change(function() {
             var min_value = document.getElementById("min_value").value;
             for (let i = 0; i < circles.length; i++) {
-                if ( ( min_value/100 ) * max_value  >= circles[i].value ) {
+                if ( ( min_value/100 ) * value_max  >= circles[i].value ) {
                     circles[i].setMap(null);
                 } else {
                     circles[i].setMap(map);
