@@ -14,7 +14,7 @@ function initMap() {
     zoom: 11,
     center: kaunas,
     mapTypeId: 'terrain'
-    });
+});
 
 
     $(document).ready(function(){
@@ -62,6 +62,7 @@ function initMap() {
         //puts markers on the map
         function updateMap(responseArray) {
             resetMap();
+            circles = [];
             for (let i = 0; i < responseArray.length; i++) {
                 var props = setProps(responseArray[i].value);
                 circles[i] = new google.maps.Circle({
@@ -88,6 +89,7 @@ function initMap() {
         }
 
         function setLegend () {
+            
             var textBlackElement = document.getElementById("textBlack");
             var textRedElement = document.getElementById("textRed");
             var textYellowElement = document.getElementById("textYellow");
@@ -146,6 +148,7 @@ function initMap() {
         });
 
         $('#min_value').change(function() {
+            
             var min_value = document.getElementById("min_value").value;
             for (let i = 0; i < circles.length; i++) {
                 if ( ( min_value/100 ) * value_max  >= circles[i].value ) {
