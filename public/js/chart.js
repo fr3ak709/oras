@@ -1,12 +1,21 @@
 var myChart = document.getElementById('myChart').getContext('2d');
-
-    sendRequest();
+var value_max = 0;
+var value_name = '';
+var measuring_unit = '';
+var chart = new Chart(myChart, { type: 'line'});
+sendRequest();
 function sendRequest() {
-    var date_from = document.getElementById("date_from").value;
-    var date_to   = document.getElementById("date_to").value;
-    var sensor    = $('input[name=sensors]:checked').val();
-    var city = 'Kaunas';
-    var chart ;
+    sensor    = $('input[name=sensors]:checked').val();
+    date_from = document.getElementById("date_from").value;
+    date_to   = document.getElementById("date_to").value;
+    sensors.forEach(element => {
+        if(element.value_name == sensor) {
+            value_name = element.value_name;
+            value_max = element.value_max;
+            measuring_unit = element.measuring_unit;
+        }
+    }); 
+    setChartName();
     String.prototype.splice = function(idx, rem, str) {
         return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
     };
@@ -25,33 +34,32 @@ function sendRequest() {
             updateChart(response);
         }
     });
-
+    function setChartName () {
+        document.getElementById("graphName").innerHTML = 'Grafikas \''+value_name + '\' nuo: '+date_from + ' iki: '+date_to;
+    }
     function updateChart(response) {
         let dates = [];
         let values = [];
-        let sensor = response[0].value_name;
-        let measuring_unit = response[0].measuring_unit;
-        let max_value = response[0].max_value;
 
         response.forEach( element => {
             dates.push(element.date);
             values.push(Math.round(element.value * 100) / 100);
         })
-        console.log(dates, values);
+
         chart = new Chart(myChart, {
             type: 'line',
-        data: {
-            labels: dates,
-            datasets: [{
-                    label: sensor,
-                    data: values,
-                    fill: false,
-                    backgroundColor: "#eebcde ",
-                    borderColor: "#eebcde",
-                    borderCapStyle: 'butt',
-                    borderDash: [5, 5],
-                }]
-        },
+            data: {
+                labels: dates,
+                datasets: [{
+                        label: value_name,
+                        data: values,
+                        fill: false,
+                        backgroundColor: "#eebcde ",
+                        borderColor: "#eebcde",
+                        borderCapStyle: 'butt',
+                        borderDash: [5, 5],
+                    }]
+            },
             options: {
                 responsive: true,
                 legend: {
@@ -74,7 +82,7 @@ function sendRequest() {
                                 beginAtZero: false,
                                 steps: 5,
                                 stepValue: 0,
-                                max: max_value
+                                max: value_max
                             }
                         }]
                 },

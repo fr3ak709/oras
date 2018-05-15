@@ -1,20 +1,20 @@
 
 function initMap() {
     var kaunas = new google.maps.LatLng( 54.90, 23.92);
-    var circles = [];
-    var map;
-    var value_max = 0;
-    var value_name = '';
-    var measuring_unit = '';
+    var circles = [], map;
+    var value_max, value_name,  measuring_unit ;    
+    var min_value = document.getElementById("min_value");
+    var min_value_text = document.getElementById("min_value_text");
+    var date_from ,  date_to; 
+
     var colourBlack='#000000', colourRed='#ff5e7e', colourYellow='#f9ff8e', colourGreen='#8eff97';
     var startBlack=1, startRed=0.9, startYellow=0.75;
-    var date_from = document.getElementById("date_from").value;
-    var date_to   = document.getElementById("date_to").value;
+
     map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 11,
-    center: kaunas,
-    mapTypeId: 'terrain'
-});
+        zoom: 11,
+        center: kaunas,
+        mapTypeId: 'terrain'
+    });
 
 
     $(document).ready(function(){
@@ -32,7 +32,7 @@ function initMap() {
                     measuring_unit = element.measuring_unit;
                 }
             }); 
-            
+            resetRange();
 
             String.prototype.splice = function(idx, rem, str) {
                 return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
@@ -148,10 +148,8 @@ function initMap() {
         });
 
         $('#min_value').change(function() {
-            
-            var min_value = document.getElementById("min_value").value;
             for (let i = 0; i < circles.length; i++) {
-                if ( ( min_value/100 ) * value_max  >= circles[i].value ) {
+                if ( ( min_value.value/100 ) * value_max  >= circles[i].value ) {
                     circles[i].setMap(null);
                 } else {
                     circles[i].setMap(map);
@@ -160,5 +158,18 @@ function initMap() {
         });
 
     });
+    //fisplay sliders value in the form
+
+    min_value_text.innerHTML = '0 ' + measuring_unit; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    min_value.oninput = function() {
+        min_value_text.innerHTML = (value_max * this.value/100)+' '+measuring_unit;
+    }
+
+    function resetRange() {
+        min_value_text.innerHTML = '0 ' + measuring_unit; 
+        min_value.value = 0;
+    }
 
 }

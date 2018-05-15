@@ -10,67 +10,33 @@
 @stop
 @section('content')
         <h4 id='mapName'>Žemėlapis</h4>
-        <button class="btn" style='width: 100%' data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Filtrai
-        </button>
-        <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-                <form>
-                    <div class='columns'>
-                        <div class='column-left'>
-                            <div class="form-group row date">
-                                <label for='date_from' class="col-md-6 col-form-label text-md-right">{{ __('Data nuo') }}</label>
-                                <div class='col-md-6'>
-                                    <input class='form-control' type='date' id='date_from' value={{date( "Y-m-d", strtotime("-7 days") )}} >
-                                </div>
-                            </div>
-                            <div class="form-group row date">
-                                <label for='date_to' class="col-md-6 col-form-label text-md-right">{{ __('Data iki') }}</label>
-                                <div class='col-md-6'>
-                                    <input class='form-control' type='date' id='date_to' value={{date("Y-m-d")}} >
-                                </div>
-                            </div>
-                            <div class="form-group row ">
-                                <label for='min_value' class="col-md-6 col-form-label text-md-right">{{ __('Vertės viršijančios % leistino dydžio: ') }}</label>            
-                                <div class="col-md-2  text-md-right" id='min_value_text'></div>
-                                <div class='col-md-4'>
-                                    <input class='form-control slider' type='range' id='min_value' value='0' >
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class='column-right'>
-                            <label class="radio col-md-6 col-form-label text-md-right" for="sensors-radio-group">Sensoriai</label>
-                            <div class="form-group row radio-buttons" name="sensors-radio-group">
-                                @foreach($sensors as $sensor )
-                                <div class="form-check radio col-md-12" >
-                                    <label class="radio col-md-6 col-form-label text-md-right" for="sensors">{{$sensor->value_name . ' ' .$sensor->measuring_unit}}</label>
-                                    <input class="radio col-md-4 radio-circle" name="sensors" type="radio" value={{$sensor->value_name}} checked>
-                                </div> <br />
-                                @endforeach
-                            
-                            </div>
-                        </div>
-                    </div>
-                    <button type='button' class='btn btn-submit' style='margin : 0 45% 5% 45%' id='apply_filter'>filtruoti </button>
-                </form  >
+        @include('dataFilter')
+        <br><br>
+        <div class="col-md-12 row">
+            <label id='min_value_label' for='min_value' class="col-md-6 col-form-label text-md-right">
+                Slėpti vertes mažesnes nei : 
+                <label id='min_value_text'></label>
+            </label>            
+            <div class="col-md-6">
+                <input class='slider' style='margin: 0.75rem 0 0 0' type='range' id='min_value' value='0' >
             </div>
         </div>
+
     <div class='legend'>
         <div>
-            <div id='textGreen'>asd</div>
+            <div id='textGreen'>0</div>
             <div id='colourGreen' style='background: green'></div>
         </div>
         <div  >
-            <div id='textYellow'>asd</div>
+            <div id='textYellow'>0</div>
             <div id='colourYellow' style='background: yellow'></div>
         </div> 
         <div >
-            <div id='textRed'>asd</div>
+            <div id='textRed'>0</div>
             <div id='colourRed' style='background: red'></div>
         </div>
         <div  >
-            <div id='textBlack'>asd</div>
+            <div id='textBlack'>0</div>
             <div id='colourBlack' style='background: black'></div>
         </div>
     </div>

@@ -30,5 +30,10 @@
             </tr>
         @endforeach
     </table>
+    <br>
+    <div  style='margin: auto'>
+        {{$reports->links()}}
+    </div>
+
     @include('reports/create')
 @stop

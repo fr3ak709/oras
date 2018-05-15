@@ -91,9 +91,6 @@ class DataController extends Controller
         $date = date('Y-m-d H:i:s');
         $data = Sensor_data::select(
             DB::raw('
-                sensors.value_name AS value_name, 
-                sensors.value_max AS value_max, 
-                sensors.measuring_unit AS measuring_unit,
                 AVG(sensor_data.value) AS value,  
                 DATE(sensor_data.date) AS date' 
             )
@@ -113,7 +110,7 @@ class DataController extends Controller
     
     public function generate () {
         $startdate = date('Y-m-d H:i:s');
-        $startdate = date('Y-m-d H:i:s',strtotime('+2 days',strtotime($startdate)));
+       // $startdate = date('Y-m-d H:i:s',strtotime('+2 days',strtotime($startdate)));
         $minLat  = 54.82; $maxLat  = 54.96;
         $minLong = 23.76; $maxLong = 24.10;
         $mil = 1000000;

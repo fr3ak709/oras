@@ -17,25 +17,25 @@
                 <div class="form-group row">
                     <label for='name'  class="col-md-4 col-form-label text-md-right">Pavadinimas</label>
                     <div class='col-md-6'>
-                        <input class='form-control' type='text' name='name' placeholder='[teksto eilutė] Pavadinimas'>
+                        <input class='form-control' type='text' name='name' placeholder='[teksto eilutė] Pavadinimas' required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for='name'  class="col-md-4 col-form-label text-md-right">Vertės pavadinimas</label>
                     <div class='col-md-6'>
-                        <input class='form-control' type='text' name='value_name' placeholder='[teksto eilutė] co; temperatūra;'>
+                        <input class='form-control' type='text' name='value_name' placeholder='[teksto eilutė] co; temperatūra;' required>
                     </div>
                 </div>                
                 <div class="form-group row">
                     <label for='name'  class="col-md-4 col-form-label text-md-right">Matavimo vienetas</label>
                     <div class='col-md-6'>
-                        <input class='form-control' type='text' name='measuring_unit' placeholder='[teksto eilutė] mg/m3; C;'>
+                        <input class='form-control' type='text' name='measuring_unit' placeholder='[teksto eilutė] mg/m3; C;' required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for='name'  class="col-md-4 col-form-label text-md-right">Tarnavimo laikas, metais</label>
                     <div class='col-md-6'>
-                        <input class='form-control' type='text' name='expected_operating_time' placeholder='[realus skaičius] 1.5; 2;'>
+                        <input class='form-control' type='text' name='expected_operating_time' placeholder='[realus skaičius] 1.5; 2;' required>
                     </div>
                 </div>                
 <!--              <div class="form-group row">
@@ -53,7 +53,7 @@
                 <div class="form-group row">
                     <label for='name'  class="col-md-4 col-form-label text-md-right">Maksimali leidžiama vertė</label>
                     <div class='col-md-6'>
-                        <input class='form-control' type='text' name='value_max' placeholder='[realus skaičius] 0.45; 0.1;'>
+                        <input class='form-control' type='text' name='value_max' placeholder='[realus skaičius] 0.45; 0.1;' required>
                     </div>
                 </div>
 <!--                 <div class="form-group row">

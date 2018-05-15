@@ -7,6 +7,18 @@
     <button  class='btn btn-info right'  data-toggle="modal" data-target="#myModal"> Pridėti prietaisą</button>
 @stop
 @section('content')
+    <div>
+        <a href="{{ route('/devices', 'show=is_empty') }}">
+            <button type="submit" class='btn right'>Be sensorių</button>
+        </a>
+        <a href="{{ route('/devices', 'show=needs_replacing')  }}">
+            <button type="submit" class='btn right'>Reikia priežiūros</button>
+        </a>    
+        <a href="{{ route('/devices')  }}">
+            <button type="submit" class='btn right'>Visi</button>
+        </a>
+    </div>
+<br><br>
     <table style='margin: auto;'>
         <tr>
             <td style='width:20%'><strong>Pavadinimas</strong></td>

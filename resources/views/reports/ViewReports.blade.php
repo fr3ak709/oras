@@ -5,6 +5,7 @@
 @stop
 
 @section('content')
+
     <table style='margin: auto; width:80%;'>
         <tr>
             <td style='width:20%;' >Data</td>
@@ -19,4 +20,9 @@
                 <td> 
             </tr>
         @endforeach 
+    </table>
+    <br>
+    <div  style='margin: auto; width:80%;'>
+        {{$reports->links()}}
+    </div>
 @stop

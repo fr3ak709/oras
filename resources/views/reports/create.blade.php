@@ -16,19 +16,19 @@
                     <div class="form-group row">
                         <label for='title'  class="col-md-4 col-form-label text-md-right">{{ __('Pavadinimas') }}</label>
                         <div class='col-md-6'>
-                            <input class='form-control' type='text' name='title' placeholder='Pavadinimas'>
+                            <input class='form-control' type='text' name='title' placeholder='Pavadinimas' required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for='Date' class="col-md-4 col-form-label text-md-right">{{ __('Data') }}</label>
                         <div class='col-md-6'>
-                            <input class='form-control' type='date' name='date' value={{date("Y-m-d")}} >
+                            <input class='form-control' type='date' name='date' value={{date("Y-m-d")}} required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for='Date' class="col-md-4 col-form-label text-md-right">{{ __('Failas') }}</label>
                         <div class='col-md-6 '>
-                            <input class='form-control-file' type="file" accept='application/pdf' name='report' value=''>
+                            <input class='form-control-file' type="file" accept='application/pdf' name='report' value='' required>
                         </div>
                     </div>
                     <div class="form-group row mb-0">
