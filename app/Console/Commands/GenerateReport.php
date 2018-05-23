@@ -63,6 +63,15 @@ class GenerateReport extends Command
                 ->groupBy(DB::raw('hour'))
                 ->orderBy('hour')
                 ->get();
+
+            $sensors->data_above_allowed = Sensor_data::whereBetween('date', [
+                    date('Y-m-d',strtotime('-1 days',strtotime($date ))),  
+                    $date
+                ])
+                ->join('sensors', 'sensors_id', '=', 'sensors.id')
+                ->where('value', '>=', $sensor->value_max)
+                ->orderBy('value')->get();
+
         $file = PDF::loadView('reports/GeneratedReport', [
             'sensors'=>$sensors, 
             'date'=>date('Y-m-d',strtotime('-1 days',strtotime($date )))
@@ -75,5 +84,6 @@ class GenerateReport extends Command
         Storage::disk('s3')->put($unique_name, $file->output());
         $report->path = $unique_name;
         $report->save();
+        
     }
 }

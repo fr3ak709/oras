@@ -21,7 +21,7 @@ class DataController extends Controller
         }
     }
 
-    public function test() {
+    public function testing() {
         $date = date("Y-m-d");
      /*    $sensors = Sensor::select( DB::raw (
             'sensors.value_name AS value_name, 
@@ -110,25 +110,31 @@ class DataController extends Controller
     
     public function generate () {
         $startdate = date('Y-m-d H:i:s');
+        $startdate = date('Y-m-d H:i:s',strtotime('-1 days',strtotime($startdate)));
        // $startdate = date('Y-m-d H:i:s',strtotime('+2 days',strtotime($startdate)));
         $minLat  = 54.82; $maxLat  = 54.96;
         $minLong = 23.76; $maxLong = 24.10;
         $mil = 1000000;
-        $minCO2 = 20.0; $maxCO2 = 200.0; 
-        $minNO2 = 20.0; $maxNO2 = 200.0; 
-        $minTemperature = 15.0; $maxTemperature = 30.0; 
-        $minAcceleration = 0.0; $maxAcceleration = 10.0; 
+
         $date = $startdate;
-        for ($i = 0; $i < 100; $i++) {
-            $data = new Sensor_data;
-            $date = date('Y-m-d H:i:s',strtotime('+10 minutes',strtotime($date)));
-            $data->date = $date;
-            $data->lat =  rand((int)($minLat *$mil), (int)($maxLat *$mil))/$mil;
-            $data->long = rand((int)($minLong*$mil), (int)($maxLong*$mil))/$mil;
-            $data->value =  rand((int)($minCO2 *$mil), (int)($maxCO2 *$mil))/$mil;
-            $data->sensors_id = 100;
-            $data->save();
+        $sensors = Sensor::all();
+        foreach($sensors as $sensor) {
+            echo $sensor->value_name;
+            echo $startdate;
+            $date  = $startdate;
+
+            for ($i = 0; $i < 100; $i++) {
+                $data = new Sensor_data;
+                $date = date('Y-m-d H:i:s',strtotime('+1 minutes',strtotime($date)));
+                $data->date = $date;
+                $data->lat =  rand((int)($minLat *$mil), (int)($maxLat *$mil))/$mil;
+                $data->long = rand((int)($minLong*$mil), (int)($maxLong*$mil))/$mil;
+                $data->value =  rand((int)($sensor->value_max/2 *$mil), (int)(($sensor->value_max+50) *$mil))/$mil;
+                $data->sensors_id = $sensor->id;
+                $data->save();
+            }
         }
+
         $date = $startdate;
 
     }
@@ -192,4 +198,27 @@ class DataController extends Controller
 
 
 
+    public function test(){
+        $coordinateslat =  '40.7060006';
+        $coordinateslng = '-74.008801';
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=".$coordinateslat.",".$coordinateslng."&key=AIzaSyBxGurAngBBEOYVVW1f--J9KtOlBF-yWtE";
+        $address = urlencode("Wall Street, New York");
+       // $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=" . $address;
+        $response = file_get_contents($url);
+        $json = json_decode($response, true);
+     
+       // $lat = $json['results'][0]['geometry']['location']['lat'];
+       // $lng = $json['results'][0]['geometry']['location']['lng'];
+
+/*         
+        foreach ($json['results'][0]['address_components'][1] as $result) {
+            echo $result;
+        } 
+        https://developers.google.com/maps/documentation/geocoding/intro#ReverseGeocoding
+ */        
+        echo 'test strat-';
+        echo $json['results'][0]['address_components'][1]['long_name'];//[1]['long_name'] ;
+        echo $json['results'][0]['address_components'][4]['long_name'];//[1]['long_name'] ;
+        echo '-test end';
+    }
 }

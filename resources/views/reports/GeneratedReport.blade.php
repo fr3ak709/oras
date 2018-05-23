@@ -34,6 +34,26 @@
                 @endforeach
             </table>
             <br>
+
+            @if(!$sensors->data_above_allowed->isEmpty()) 
+            <table>
+            <tr>
+                <td> Laikas </td>
+                <td> Platuma </td>
+                <td> Ilguma </td>
+                <td> Vertė {{$sensor->measuring_unit}} </td>
+            </tr> 
+           
+                @foreach($sensors->data_above_allowed as $item) 
+                    <tr>
+                        <td>{{$item->date}}</td>
+                        <td>{{$item->long}}</td>
+                        <td>{{$item->lat}}</td>
+                        <td>{{number_format((float)$item->value, 2, '.', '')}}</td>
+                    </tr>
+                @endforeach
+            </table>            
+            @endif
         @endforeach
     </body>
     

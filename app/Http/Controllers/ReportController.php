@@ -17,14 +17,14 @@ class ReportController extends Controller
 
     public function index(Request $request) {
         $reports = DB::table('reports')
-        ->orderBy('date', 'title')->paginate(5);
+        ->orderBy('date', 'title')->paginate(10);
         return view('reports/ViewReports', ['reports'=>$reports]); 
     }
 
     public function editReports() {
         if(Auth::check()) {
             $reports = Report::where('creator_id', '=', Auth::id())->
-                orderBy('date', 'title')->paginate(5);
+                orderBy('date', 'title')->paginate(10);
             return view('reports/EditReports', ['reports'=>$reports]);
         }
     }

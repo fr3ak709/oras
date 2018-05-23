@@ -21,6 +21,7 @@ function initMap() {
         sendRequest();      //loads the markers
         setLegend();
         setMapName();
+        resetRange();
         function sendRequest() {
             sensor    = $('input[name=sensors]:checked').val();
             date_from = document.getElementById("date_from").value;
@@ -32,7 +33,6 @@ function initMap() {
                     measuring_unit = element.measuring_unit;
                 }
             }); 
-            resetRange();
 
             String.prototype.splice = function(idx, rem, str) {
                 return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
@@ -145,6 +145,7 @@ function initMap() {
             sendRequest();
             setMapName();
             setLegend();
+            resetRange();
         });
 
         $('#min_value').change(function() {

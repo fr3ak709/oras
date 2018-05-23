@@ -27,7 +27,7 @@ Route::get('/report/{id}', 'ReportController@download');
 Route::get('/device/{id}', 'SensorController@devicesSensorsView');
 
 //debuging actions
-Route::get('test', 'SensorController@sensorsView')->name('/test');
+Route::get('test', 'DataController@test')->name('/test');
 Route::get('generate', 'DataController@generate')->name('/generate');
 
 // actions to reqcieve data

@@ -47,17 +47,18 @@ function sendRequest() {
         })
 
         chart = new Chart(myChart, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: dates,
                 datasets: [{
                         label: value_name,
                         data: values,
                         fill: false,
-                        backgroundColor: "#eebcde ",
+                        backgroundColor: "#eebcde",
                         borderColor: "#eebcde",
                         borderCapStyle: 'butt',
                         borderDash: [5, 5],
+                        strokeColor: "rgba(220,220,220,0.8)", 
                     }]
             },
             options: {
